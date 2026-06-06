@@ -1,5 +1,5 @@
-// To manage listings later, add, edit, or remove vehicle objects in this array.
-// Keep each id unique and use an existing category so the marketplace filters continue to work.
+// To add a truck, copy one object and update the title, specs, image, and status.
+// To remove a truck, delete its object. Keep each id unique and use an existing category.
 export const vehicles = [
   {
     id: 'scania-r460-2022',
@@ -10,11 +10,16 @@ export const vehicles = [
     price: 'POA',
     mileage: '440,000 km',
     transmission: 'Automatic',
+    drive: '6x4',
+    fuel: 'Diesel',
     location: 'Boksburg, Gauteng',
     status: 'Available',
-    category: 'Truck Tractors',
+    category: 'Truck Tractor',
+    tag: 'Long-haul ready',
     transportAvailable: true,
     image: '/images/hero-truck-highway.png',
+    overview:
+      'A demo listing for a late-model Scania truck tractor configured for demanding commercial transport applications.',
   },
   {
     id: 'mercedes-actros-2645-2020',
@@ -25,11 +30,16 @@ export const vehicles = [
     price: 'POA',
     mileage: '610,000 km',
     transmission: 'Automatic',
+    drive: '6x4',
+    fuel: 'Diesel',
     location: 'Boksburg, Gauteng',
     status: 'Available',
-    category: 'Truck Tractors',
+    category: 'Truck Tractor',
+    tag: 'Fleet favourite',
     transportAvailable: false,
     image: '/images/fleet-yard-trucks.png',
+    overview:
+      'A demo listing representing a proven Actros configuration suited to established fleets and commercial operators.',
   },
   {
     id: 'volvo-fh440-2019',
@@ -39,12 +49,17 @@ export const vehicles = [
     title: '2019 Volvo FH440 Truck Tractor',
     price: 'POA',
     mileage: '720,000 km',
-    transmission: 'Manual',
+    transmission: 'I-Shift / Automatic',
+    drive: '6x4',
+    fuel: 'Diesel',
     location: 'Boksburg, Gauteng',
     status: 'Available',
-    category: 'Truck Tractors',
+    category: 'Truck Tractor',
+    tag: 'Heavy-duty transport',
     transportAvailable: false,
     image: '/images/truck-detail-closeup.png',
+    overview:
+      'A demo heavy-duty Volvo truck tractor listing for buyers considering an established long-distance platform.',
   },
   {
     id: 'man-tgs-26440-2018',
@@ -55,11 +70,16 @@ export const vehicles = [
     price: 'POA',
     mileage: '690,000 km',
     transmission: 'Manual',
+    drive: '6x4',
+    fuel: 'Diesel',
     location: 'Boksburg, Gauteng',
     status: 'Available',
-    category: 'Truck Tractors',
+    category: 'Rigid Truck',
+    tag: 'Work-ready option',
     transportAvailable: true,
     image: '/images/dark-road-background.png',
+    overview:
+      'A demo rigid truck listing with a practical 6x4 configuration for robust commercial work requirements.',
   },
   {
     id: 'hino-500-dropside-2021',
@@ -70,11 +90,16 @@ export const vehicles = [
     price: 'POA',
     mileage: '310,000 km',
     transmission: 'Manual',
+    drive: '4x2',
+    fuel: 'Diesel',
     location: 'Boksburg, Gauteng',
     status: 'Available',
-    category: 'Rigid Trucks',
+    category: 'Rigid Truck',
+    tag: 'Local delivery',
     transportAvailable: false,
     image: '/images/warehouse-loading-bays.png',
+    overview:
+      'A demo dropside listing aimed at businesses seeking a versatile medium-duty vehicle for local delivery work.',
   },
   {
     id: 'isuzu-f-series-van-body-2020',
@@ -85,11 +110,16 @@ export const vehicles = [
     price: 'POA',
     mileage: '280,000 km',
     transmission: 'Manual',
+    drive: '4x2',
+    fuel: 'Diesel',
     location: 'Boksburg, Gauteng',
     status: 'Available',
-    category: 'Vans',
+    category: 'Van Body Truck',
+    tag: 'Business delivery',
     transportAvailable: false,
     image: '/images/animated-yard-concept.png',
+    overview:
+      'A demo van body truck listing for commercial buyers who need an enclosed business delivery configuration.',
   },
   {
     id: 'scania-p-series-rigid-2023',
@@ -100,10 +130,15 @@ export const vehicles = [
     price: 'POA',
     mileage: '180,000 km',
     transmission: 'Automatic',
+    drive: '6x2',
+    fuel: 'Diesel',
     location: 'Boksburg, Gauteng',
     status: 'Available',
-    category: 'Rigid Trucks',
+    category: 'Rigid Truck',
+    tag: 'Low mileage option',
     transportAvailable: true,
     image: '/images/yard-layout-top-view.png',
+    overview:
+      'A demo low-mileage rigid truck listing representing a modern Scania platform for commercial fleet buyers.',
   },
 ];
