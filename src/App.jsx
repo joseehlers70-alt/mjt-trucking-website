@@ -1,4 +1,5 @@
 import About from './components/About.jsx';
+import AvailableVehicles from './components/AvailableVehicles.jsx';
 import Contact from './components/Contact.jsx';
 import Engineering from './components/Engineering.jsx';
 import FleetShowcase from './components/FleetShowcase.jsx';
@@ -9,9 +10,9 @@ import Navbar from './components/Navbar.jsx';
 import QuoteForm from './components/QuoteForm.jsx';
 import Services from './components/Services.jsx';
 import Stats from './components/Stats.jsx';
-import TransportMotion from './components/TransportMotion.jsx';
 import TruckDetail from './components/TruckDetail.jsx';
 import WarehouseSection from './components/WarehouseSection.jsx';
+import TransportMotion from './components/TransportMotion.jsx';
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Stats />
         <About />
         <Services />
+        <AvailableVehicles />
         <FleetShowcase />
         <WarehouseSection />
         <TransportMotion />

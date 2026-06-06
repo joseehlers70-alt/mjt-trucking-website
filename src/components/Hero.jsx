@@ -13,7 +13,7 @@ export default function Hero() {
           available for business clients.
         </p>
         <div className="hero-actions">
-          <a className="button button-primary" href="#fleet">
+          <a className="button button-primary" href="#available-vehicles">
             View Available Vehicles
           </a>
           <a
