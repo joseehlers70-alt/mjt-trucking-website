@@ -43,6 +43,13 @@
   margin-bottom: 32px;
 }
 
+.vehicle-demo-notice {
+  margin: -8px 0 22px;
+  color: #9cadc0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
 .vehicle-filter {
   min-height: 42px;
   padding: 0 15px;
@@ -132,7 +139,8 @@
 
 .vehicle-status,
 .vehicle-category-badge,
-.vehicle-tag {
+.vehicle-tag,
+.vehicle-image-note {
   padding: 7px 10px;
   border-radius: 4px;
   font-size: 0.7rem;
@@ -161,6 +169,17 @@
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(6, 12, 21, 0.82);
   color: white;
+}
+
+.vehicle-image-note {
+  position: absolute;
+  z-index: 2;
+  right: 16px;
+  bottom: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(6, 12, 21, 0.76);
+  color: #b9c7d6;
+  font-size: 0.62rem;
 }
 
 .vehicle-content {
@@ -207,7 +226,8 @@
 
 .vehicle-price strong {
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.18rem;
+  white-space: nowrap;
 }
 
 .vehicle-specs {
@@ -368,6 +388,11 @@ body.modal-open {
   left: 18px;
 }
 
+.vehicle-modal-image .vehicle-image-note {
+  right: 18px;
+  bottom: 18px;
+}
+
 .vehicle-modal-content {
   display: grid;
   align-content: start;
@@ -383,6 +408,10 @@ body.modal-open {
   margin: 7px 0 5px;
   font-size: 1.65rem;
   line-height: 1.25;
+}
+
+.vehicle-modal-heading .vehicle-price strong {
+  font-size: 1.3rem;
 }
 
 .vehicle-modal-heading p {
@@ -503,6 +532,23 @@ body.modal-open {
 
   .vehicle-title-row h3 {
     min-height: 0;
+  }
+
+  .vehicle-tag,
+  .vehicle-image-note {
+    bottom: 12px;
+    max-width: calc(50% - 18px);
+    padding: 6px 8px;
+    font-size: 0.58rem;
+  }
+
+  .vehicle-tag {
+    left: 12px;
+  }
+
+  .vehicle-image-note {
+    right: 12px;
+    text-align: right;
   }
 
   .vehicle-specs,
