@@ -11,7 +11,9 @@ const filters = [
   { label: 'Transport Available', value: 'transport' },
 ];
 
-const disclaimer = 'Vehicle availability, mileage, and specifications must be confirmed directly with MJT Trucking.';
+const disclaimer = 'Prices, availability, mileage, and specifications are subject to confirmation by MJT Trucking.';
+const demoNotice =
+  'These vehicle listings are for presentation/demo purposes until confirmed stock details are supplied by MJT Trucking.';
 
 function getWhatsAppUrl(title) {
   const message = `Hi Sisco, I am interested in the ${title} listed on the MJT Trucking website.`;
@@ -52,8 +54,8 @@ export default function AvailableVehicles() {
             <p className="eyebrow">Trucks for Sale</p>
             <h2>Available Vehicles</h2>
             <p>
-              Explore our demo commercial vehicle marketplace. These mock listings show how confirmed MJT stock will
-              be presented once vehicle details and photography are supplied.
+              Explore a premium presentation of the commercial vehicle marketplace MJT Trucking is building for
+              confirmed stock.
             </p>
           </div>
           <div className="marketplace-count">
@@ -61,6 +63,8 @@ export default function AvailableVehicles() {
             <span>{visibleVehicles.length === 1 ? 'vehicle' : 'vehicles'} shown</span>
           </div>
         </div>
+
+        <p className="vehicle-demo-notice">{demoNotice}</p>
 
         <div className="vehicle-filters reveal" aria-label="Filter available vehicles">
           {filters.map((filter) => (
@@ -79,12 +83,13 @@ export default function AvailableVehicles() {
           {visibleVehicles.map((vehicle) => (
             <article className="vehicle-card reveal" key={vehicle.id}>
               <div className="vehicle-image">
-                <img src={vehicle.image} alt={`${vehicle.title} mock listing`} loading="lazy" />
+                <img src={vehicle.image} alt={`${vehicle.title} generated demo visual`} loading="lazy" />
                 <div className="vehicle-badges">
                   <span className="vehicle-status">{vehicle.status}</span>
                   <span className="vehicle-category-badge">{vehicle.category}</span>
                 </div>
                 <span className="vehicle-tag">{vehicle.tag}</span>
+                <span className="vehicle-image-note">Generated demo visual</span>
               </div>
 
               <div className="vehicle-content">
@@ -169,8 +174,9 @@ export default function AvailableVehicles() {
             </button>
 
             <div className="vehicle-modal-image">
-              <img src={selectedVehicle.image} alt={`${selectedVehicle.title} mock listing`} />
+              <img src={selectedVehicle.image} alt={`${selectedVehicle.title} generated demo visual`} />
               <span className="vehicle-status">{selectedVehicle.status}</span>
+              <span className="vehicle-image-note">Generated demo visual</span>
             </div>
 
             <div className="vehicle-modal-content">
@@ -188,7 +194,7 @@ export default function AvailableVehicles() {
 
               <div className="vehicle-modal-section">
                 <h4>Overview</h4>
-                <p>{selectedVehicle.overview}</p>
+                <p>{selectedVehicle.shortDescription}</p>
               </div>
 
               <div className="vehicle-modal-section">
@@ -219,6 +225,7 @@ export default function AvailableVehicles() {
                 </a>
               </div>
               <p className="vehicle-modal-disclaimer">{disclaimer}</p>
+              <p className="vehicle-modal-disclaimer">{demoNotice}</p>
             </div>
           </div>
         </div>
