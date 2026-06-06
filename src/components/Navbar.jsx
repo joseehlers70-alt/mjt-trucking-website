@@ -5,7 +5,7 @@ const navItems = [
   ['Home', '#home'],
   ['About', '#about'],
   ['Services', '#services'],
-  ['Fleet', '#fleet'],
+  ['Available Vehicles', '#available-vehicles'],
   ['Transport in Motion', '#transport-motion'],
   ['Gallery', '#gallery'],
   ['Contact', '#contact'],
