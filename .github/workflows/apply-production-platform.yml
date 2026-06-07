@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - codex/production-truck-sales-platform
-  pull_request:
-    branches:
-      - main
 
 permissions:
   contents: write
@@ -19,14 +16,18 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: codex/production-truck-sales-platform
-      - name: Apply reviewed website source
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Apply, validate, and commit website source
         shell: bash
         run: |
           set -euo pipefail
-          unzip -t .codex-production-platform.zip
-          unzip -o .codex-production-platform.zip
-          rm -f .codex-production-platform.zip
+          cat .codex-production-platform.part-* > /tmp/mjt-production-platform.zip
+          unzip -t /tmp/mjt-production-platform.zip
+          unzip -o /tmp/mjt-production-platform.zip
+          rm -f .codex-production-platform.zip .codex-production-platform.part-*
           rm -f .github/workflows/apply-production-platform.yml
           rm -f src/components/AvailableVehicles.jsx
           rm -f src/components/WarehouseSection.jsx
@@ -34,6 +35,9 @@ jobs:
           rm -f src/data/vehicles.js
           rm -f src/data/gallery.js
           rm -f src/vehicles.css
+          npm install
+          npm run build
+          rm -rf dist
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
