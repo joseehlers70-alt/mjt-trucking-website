@@ -1,6 +1,6 @@
-import { ArrowUpRight, Gauge, MapPin, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, Gauge, ImageOff, MapPin, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { formatMileage, formatPrice, truckLocation } from '../lib/inventory.js';
+import { formatMileage, formatPrice, truckDisplayName, truckLocation } from '../lib/inventory.js';
 import { whatsappNumber } from '../lib/supabase.js';
 
 const statusLabels = {
@@ -10,7 +10,8 @@ const statusLabels = {
 };
 
 export default function VehicleCard({ truck }) {
-  const message = `Hi MJT, I'm interested in the ${truck.year} ${truck.make} ${truck.model} listed on your website. Is it still available?`;
+  const displayName = truckDisplayName(truck);
+  const message = `Hi MJT, I'm interested in the ${displayName} listed on your website. Is it still available?`;
 
   return (
     <article className="inventory-card">
@@ -19,7 +20,8 @@ export default function VehicleCard({ truck }) {
           <img src={truck.main_image_url} alt={`${truck.year} ${truck.make} ${truck.model}`} loading="lazy" />
         ) : (
           <div className="vehicle-image-fallback" aria-label="Vehicle photo unavailable">
-            <img src="/images/mjt-trucking-logo-transparent-hd.png" alt="" />
+            <ImageOff size={36} />
+            <span>Photo unavailable</span>
           </div>
         )}
         <span className={`status-pill status-${truck.status}`}>{statusLabels[truck.status] || truck.status}</span>
@@ -29,7 +31,7 @@ export default function VehicleCard({ truck }) {
         <div className="inventory-card-heading">
           <div>
             <span>{truck.category}</span>
-            <h3>{truck.title}</h3>
+            <h3>{displayName}</h3>
             {truck.variant && <p>{truck.variant}</p>}
           </div>
           <strong>{formatPrice(truck)}</strong>
