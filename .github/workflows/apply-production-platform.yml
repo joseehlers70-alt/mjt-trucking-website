@@ -1,9 +1,9 @@
 name: Apply production platform
 
 on:
-  push:
+  pull_request:
     branches:
-      - codex/production-truck-sales-platform
+      - main
 
 permissions:
   contents: write
@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: codex/production-truck-sales-platform
       - uses: actions/setup-node@v4
         with:
           node-version: 22
