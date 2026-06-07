@@ -1,0 +1,38 @@
+name: Apply Supabase production hardening
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: codex/supabase-production-inventory
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply, validate, and commit production changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git apply --check .codex-supabase-hardening.patch
+          git apply .codex-supabase-hardening.patch
+          rm -f .codex-supabase-hardening.patch
+          rm -f .github/workflows/apply-supabase-hardening.yml
+          npm install
+          npm run build
+          rm -rf dist
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Harden Supabase production inventory"
+          git push origin HEAD:codex/supabase-production-inventory
