@@ -1,10 +1,22 @@
-import { ArrowLeft, Check, Gauge, MapPin, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Check, Gauge, ImageOff, MapPin, MessageCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import InventoryState from '../components/InventoryState.jsx';
 import SiteLayout from '../components/SiteLayout.jsx';
-import { formatMileage, formatPrice, getTruckBySlug, truckLocation } from '../lib/inventory.js';
+import {
+  formatMileage,
+  formatPrice,
+  getTruckBySlug,
+  truckDisplayName,
+  truckLocation,
+} from '../lib/inventory.js';
 import { whatsappNumber } from '../lib/supabase.js';
+
+const statusLabels = {
+  available: 'Available',
+  reserved: 'Reserved',
+  sold: 'Sold',
+};
 
 export default function TruckDetailPage() {
   const { slug } = useParams();
@@ -25,7 +37,7 @@ export default function TruckDetailPage() {
 
   useEffect(() => {
     if (!truck) return;
-    document.title = `${truck.year} ${truck.make} ${truck.model} | MJT Trucking`;
+    document.title = `${truckDisplayName(truck)} | MJT Trucking`;
     return () => {
       document.title = 'MJT Trucking | Quality Used Trucks & Trailers for Sale';
     };
@@ -41,7 +53,8 @@ export default function TruckDetailPage() {
   }
 
   const gallery = [...new Set([truck.main_image_url, ...(truck.image_urls || [])].filter(Boolean))];
-  const message = `Hi MJT, I'm interested in the ${truck.year} ${truck.make} ${truck.model} listed on your website. Is it still available?`;
+  const displayName = truckDisplayName(truck);
+  const message = `Hi MJT, I'm interested in the ${displayName} listed on your website. Is it still available?`;
 
   const specs = [
     ['Year', truck.year],
@@ -66,8 +79,17 @@ export default function TruckDetailPage() {
           <div className="detail-layout">
             <div className="detail-gallery">
               <div className="detail-main-image">
-                {activeImage ? <img src={activeImage} alt={truck.title} /> : <div className="vehicle-image-fallback"><img src="/images/mjt-trucking-logo-transparent-hd.png" alt="" /></div>}
-                <span className={`status-pill status-${truck.status}`}>{truck.status}</span>
+                {activeImage ? (
+                  <img src={activeImage} alt={displayName} />
+                ) : (
+                  <div className="vehicle-image-fallback">
+                    <ImageOff size={42} />
+                    <span>Photo unavailable</span>
+                  </div>
+                )}
+                <span className={`status-pill status-${truck.status}`}>
+                  {statusLabels[truck.status] || truck.status}
+                </span>
               </div>
               {gallery.length > 1 && (
                 <div className="detail-thumbnails">
@@ -82,7 +104,7 @@ export default function TruckDetailPage() {
 
             <aside className="detail-summary">
               <span className="detail-category">{truck.category}</span>
-              <h1>{truck.title}</h1>
+              <h1>{displayName}</h1>
               {truck.variant && <p className="detail-variant">{truck.variant}</p>}
               <strong className="detail-price">{formatPrice(truck)}</strong>
               <div className="detail-location"><MapPin size={18} /> {truckLocation(truck)}</div>

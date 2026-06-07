@@ -8,6 +8,9 @@ export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
 
 export const supabase = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
+      db: {
+        schema: 'public',
+      },
       auth: {
         persistSession: true,
         autoRefreshToken: true,
@@ -17,4 +20,5 @@ export const supabase = isSupabaseConfigured
   : null;
 
 export const whatsappNumber =
-  import.meta.env.VITE_WHATSAPP_NUMBER || import.meta.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '27713319387';
+  (import.meta.env.VITE_WHATSAPP_NUMBER || import.meta.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '')
+    .replace(/\D/g, '');

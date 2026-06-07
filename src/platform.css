@@ -90,9 +90,12 @@ select {
 .vehicle-image-fallback {
   display: grid;
   place-items: center;
+  align-content: center;
+  gap: 10px;
   background:
     linear-gradient(145deg, rgba(21, 42, 66, 0.95), rgba(5, 10, 17, 0.98)),
     url('/images/dark-road-background.png') center / cover;
+  color: #9fb4ca;
 }
 
 .vehicle-image-fallback img {
@@ -100,6 +103,12 @@ select {
   max-height: 45%;
   object-fit: contain;
   opacity: 0.84;
+}
+
+.vehicle-image-fallback span {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .status-pill,
