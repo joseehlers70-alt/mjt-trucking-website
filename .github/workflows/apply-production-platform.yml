@@ -1,0 +1,37 @@
+name: Apply production platform
+
+on:
+  push:
+    branches:
+      - codex/production-truck-sales-platform
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply reviewed website source
+        shell: bash
+        run: |
+          set -euo pipefail
+          unzip -t .codex-production-platform.zip
+          unzip -o .codex-production-platform.zip
+          rm -f .codex-production-platform.zip
+          rm -f .github/workflows/apply-production-platform.yml
+          rm -f src/components/AvailableVehicles.jsx
+          rm -f src/components/WarehouseSection.jsx
+          rm -f src/components/Contact.jsx
+          rm -f src/data/vehicles.js
+          rm -f src/data/gallery.js
+          rm -f src/vehicles.css
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Build production truck sales platform"
+          git push
