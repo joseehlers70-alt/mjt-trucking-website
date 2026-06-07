@@ -1,14 +1,13 @@
-import { Menu, Phone, X } from 'lucide-react';
+import { Menu, MessageCircle, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { whatsappNumber } from '../lib/supabase.js';
 
 const navItems = [
-  ['Home', '#home'],
-  ['About', '#about'],
-  ['Services', '#services'],
-  ['Available Vehicles', '#available-vehicles'],
-  ['Transport in Motion', '#transport-motion'],
-  ['Gallery', '#gallery'],
-  ['Contact', '#contact'],
+  ['Home', '/'],
+  ['Available Trucks', '/trucks'],
+  ['About', '/#about'],
+  ['Contact', '/#contact'],
 ];
 
 export default function Navbar() {
@@ -22,31 +21,42 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const close = () => setOpen(false);
-
   return (
     <header className={`navbar ${scrolled ? 'navbar--solid' : ''}`}>
-      <a className="brand" href="#home" aria-label="MJT Trucking home" onClick={close}>
-        <img src="/images/mjt-trucking-logo-transparent-hd.png" alt="MJT Trucking logo" />
-      </a>
+      <Link className="brand" to="/" aria-label="MJT Trucking home" onClick={() => setOpen(false)}>
+        <img src="/images/mjt-trucking-logo-transparent-hd.png" alt="MJT Trucking" />
+      </Link>
 
       <nav className={`navlinks ${open ? 'navlinks--open' : ''}`} aria-label="Main navigation">
-        {navItems.map(([label, href]) => (
-          <a key={href} href={href} onClick={close}>
-            {label}
-          </a>
-        ))}
-        <a className="nav-quote" href="#quote" onClick={close}>
-          Get a Quote
-        </a>
+        {navItems.map(([label, href]) =>
+          href.includes('#') ? (
+            <a key={href} href={href} onClick={() => setOpen(false)}>
+              {label}
+            </a>
+          ) : (
+            <NavLink key={href} to={href} onClick={() => setOpen(false)}>
+              {label}
+            </NavLink>
+          ),
+        )}
       </nav>
 
-      <a className="nav-call" href="tel:0713319387" aria-label="Call MJT Trucking">
-        <Phone size={18} />
-        <span>071 331 9387</span>
+      <a
+        className="nav-call"
+        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi MJT, I would like to enquire about your available trucks and trailers.')}`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <MessageCircle size={18} />
+        <span>WhatsApp MJT</span>
       </a>
 
-      <button className="menu-button" type="button" onClick={() => setOpen((value) => !value)} aria-label="Open menu">
+      <button
+        className="menu-button"
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        aria-label={open ? 'Close menu' : 'Open menu'}
+      >
         {open ? <X size={24} /> : <Menu size={24} />}
       </button>
     </header>

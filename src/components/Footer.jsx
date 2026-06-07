@@ -1,30 +1,26 @@
-export default function Footer() {
-  const year = new Date().getFullYear();
+import { Link } from 'react-router-dom';
 
+export default function Footer() {
   return (
     <footer className="footer section-dark">
       <div className="container footer-grid">
         <div>
-          <img src="/images/mjt-trucking-logo-transparent-hd.png" alt="MJT Trucking logo" />
-          <p>
-            Commercial truck and van sales from Boksburg, Gauteng, with selected transport services available through
-            available trucks.
-          </p>
+          <img src="/images/mjt-trucking-logo-transparent-hd.png" alt="MJT Trucking" />
+          <p>Quality used trucks and trailers, direct enquiries, and viewing arrangements from Boksburg, Gauteng.</p>
         </div>
         <div>
-          <strong>Quick Links</strong>
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#available-vehicles">Available Vehicles</a>
-          <a href="#quote">Get a Quote</a>
+          <strong>Inventory</strong>
+          <Link to="/trucks">Available Trucks</Link>
+          <a href="/#about">About MJT</a>
+          <a href="/#contact">Contact</a>
         </div>
         <div>
           <strong>Contact</strong>
-          <span>071 331 9387</span>
+          <a href="tel:0713319387">071 331 9387</a>
           <span>146 Denne Road, Boksburg, Gauteng, 1459</span>
         </div>
       </div>
-      <div className="container footer-bottom">Copyright {year} MJT Trucking. All rights reserved.</div>
+      <div className="container footer-bottom">Copyright {new Date().getFullYear()} MJT Trucking. All rights reserved.</div>
     </footer>
   );
 }
