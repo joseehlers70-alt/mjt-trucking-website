@@ -1,39 +1,19 @@
-import About from './components/About.jsx';
-import AvailableVehicles from './components/AvailableVehicles.jsx';
-import Contact from './components/Contact.jsx';
-import Engineering from './components/Engineering.jsx';
-import FleetShowcase from './components/FleetShowcase.jsx';
-import Footer from './components/Footer.jsx';
-import Gallery from './components/Gallery.jsx';
-import Hero from './components/Hero.jsx';
-import Navbar from './components/Navbar.jsx';
-import QuoteForm from './components/QuoteForm.jsx';
-import Services from './components/Services.jsx';
-import Stats from './components/Stats.jsx';
-import TruckDetail from './components/TruckDetail.jsx';
-import WarehouseSection from './components/WarehouseSection.jsx';
-import TransportMotion from './components/TransportMotion.jsx';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import AdminDashboard from './pages/AdminDashboard.jsx';
+import AdminLogin from './pages/AdminLogin.jsx';
+import HomePage from './pages/HomePage.jsx';
+import TruckDetailPage from './pages/TruckDetailPage.jsx';
+import TrucksPage from './pages/TrucksPage.jsx';
 
 export default function App() {
   return (
-    <>
-      <Navbar />
-      <main>
-        <Hero />
-        <Stats />
-        <About />
-        <Services />
-        <AvailableVehicles />
-        <FleetShowcase />
-        <WarehouseSection />
-        <TransportMotion />
-        <Engineering />
-        <Gallery />
-        <TruckDetail />
-        <QuoteForm />
-        <Contact />
-      </main>
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/trucks" element={<TrucksPage />} />
+      <Route path="/trucks/:slug" element={<TruckDetailPage />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin" element={<AdminDashboard />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }

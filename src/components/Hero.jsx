@@ -1,4 +1,6 @@
-import { MessageCircle, ShieldCheck } from 'lucide-react';
+import { ArrowRight, MessageCircle, ShieldCheck } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { whatsappNumber } from '../lib/supabase.js';
 
 export default function Hero() {
   return (
@@ -6,32 +8,30 @@ export default function Hero() {
       <div className="hero-media" aria-hidden="true" />
       <div className="hero-overlay" />
       <div className="container hero-content reveal">
-        <p className="eyebrow">Boksburg Commercial Vehicle Specialists</p>
-        <h1>Commercial Trucks &amp; Transport Solutions</h1>
+        <p className="eyebrow">Commercial Vehicle Sales | Boksburg</p>
+        <h1>Quality Used Trucks &amp; Trailers for Sale</h1>
         <p className="hero-lead">
-          MJT Trucking supplies commercial trucks and vans from Boksburg, Gauteng, with selected transport services
-          available for business clients.
+          Browse reliable trucks and trailers available through MJT Trucking. Contact us directly for pricing, vehicle
+          details, and viewing arrangements.
         </p>
         <div className="hero-actions">
-          <a className="button button-primary" href="#available-vehicles">
-            View Available Vehicles
-          </a>
+          <Link className="button button-primary" to="/trucks">
+            View Available Trucks
+            <ArrowRight size={18} />
+          </Link>
           <a
             className="button button-secondary"
-            href="https://wa.me/27713319387?text=Hi%20MJT%20Trucking%2C%20I%20would%20like%20to%20enquire%20about%20your%20trucks%2Fservices."
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi MJT, I would like to enquire about your available trucks and trailers.')}`}
             target="_blank"
             rel="noreferrer"
           >
             <MessageCircle size={18} />
-            WhatsApp Sisco
-          </a>
-          <a className="button button-ghost" href="#quote">
-            Get a Quote
+            WhatsApp MJT
           </a>
         </div>
         <div className="hero-proof">
           <ShieldCheck size={20} />
-          <span>Commercial truck and van sales with selected transport availability.</span>
+          <span>Clear vehicle information and direct contact with MJT Trucking.</span>
         </div>
       </div>
     </section>
