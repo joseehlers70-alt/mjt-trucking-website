@@ -1,13 +1,10 @@
 name: Apply Supabase production hardening
-
 on:
   pull_request:
     branches:
       - main
-
 permissions:
   contents: write
-
 jobs:
   apply:
     if: github.actor != 'github-actions[bot]'
@@ -24,9 +21,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git apply --check .codex-supabase-hardening.patch
-          git apply .codex-supabase-hardening.patch
-          rm -f .codex-supabase-hardening.patch
+          git apply --check --exclude=src/pages/AdminDashboard.jsx .codex-supabase-hardening.patch
+          git apply --exclude=src/pages/AdminDashboard.jsx .codex-supabase-hardening.patch
+          git apply --check .codex-admin-hardening.patch
+          git apply .codex-admin-hardening.patch
+          rm -f .codex-supabase-hardening.patch .codex-admin-hardening.patch
           rm -f .github/workflows/apply-supabase-hardening.yml
           npm install
           npm run build
