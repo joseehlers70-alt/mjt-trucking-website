@@ -11,10 +11,18 @@ export function useTrucks(options) {
 
     getPublishedTrucks(options)
       .then((data) => {
-        if (active) setTrucks(data);
+        if (active) {
+          console.info(`[MJT Inventory] Loaded ${data.length} published available vehicle(s) from Supabase.`);
+          setTrucks(data);
+          setError('');
+        }
       })
       .catch((requestError) => {
-        if (active) setError(requestError.message || 'Vehicle listings could not be loaded.');
+        console.error('[MJT Inventory] Supabase vehicle request failed.', requestError);
+        if (active) {
+          setTrucks([]);
+          setError(requestError.message || 'Vehicle listings could not be loaded.');
+        }
       })
       .finally(() => {
         if (active) setLoading(false);
