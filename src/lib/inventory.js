@@ -59,10 +59,17 @@ export async function getPublishedTrucks({ limit } = {}) {
 
   const { data, error } = await trucksTable()
     .select('*')
-    .eq('is_published', true)
-    .eq('status', 'available');
+    .eq('is_published', true);
 
-  if (error) throwInventoryError('load published vehicles', error);
+  console.info('[MJT Inventory] Supabase published trucks query result', {
+    rowCount: data?.length ?? 0,
+    trucks: data ?? [],
+  });
+
+  if (error) {
+    console.error('[MJT Inventory] Supabase published trucks query error', error);
+    throwInventoryError('load published vehicles', error);
+  }
 
   const trucks = [...(data ?? [])].sort((first, second) => {
     if (!first.created_at || !second.created_at) return 0;
@@ -79,7 +86,6 @@ export async function getTruckBySlug(slug) {
     .select('*')
     .eq('slug', slug)
     .eq('is_published', true)
-    .eq('status', 'available')
     .maybeSingle();
 
   if (error) throwInventoryError('load vehicle details', error);
