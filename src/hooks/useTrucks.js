@@ -12,7 +12,7 @@ export function useTrucks(options) {
     getPublishedTrucks(options)
       .then((data) => {
         if (active) {
-          console.info(`[MJT Inventory] Loaded ${data.length} published available vehicle(s) from Supabase.`);
+          console.info(`[MJT Inventory] Rendering ${data.length} published vehicle(s) from Supabase.`);
           setTrucks(data);
           setError('');
         }
