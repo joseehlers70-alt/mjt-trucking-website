@@ -2,14 +2,6 @@ import { isSupabaseConfigured, supabase } from './supabase.js';
 
 const IMAGE_BUCKET = 'truck-images';
 
-const truckFields = `
-  id, stock_code, slug, title, make, model, variant, category, year, mileage_km,
-  price, price_is_poa, condition, transmission, fuel_type, axle_config, engine,
-  horsepower, gvm_kg, tare_kg, colour, location_city, location_province,
-  description, features, image_urls, main_image_url, status, is_published,
-  created_at, updated_at
-`;
-
 const writableTruckFields = [
   'stock_code',
   'slug',
@@ -47,44 +39,65 @@ function requireSupabase() {
   }
 }
 
+function trucksTable() {
+  requireSupabase();
+  return supabase.schema('public').from('trucks');
+}
+
+function throwInventoryError(operation, error) {
+  console.error(`[MJT Inventory] ${operation} failed.`, {
+    message: error.message,
+    code: error.code,
+    details: error.details,
+    hint: error.hint,
+  });
+  throw new Error(error.message || `Supabase could not ${operation.toLowerCase()}.`);
+}
+
 export async function getPublishedTrucks({ limit } = {}) {
-  if (!isSupabaseConfigured) return [];
+  requireSupabase();
 
-  let query = supabase
-    .from('trucks')
-    .select(truckFields)
-    .eq('is_published', true)
-    .order('created_at', { ascending: false });
+  const { data, error } = await trucksTable()
+    .select('*')
+    .eq('is_published', true);
 
-  if (limit) query = query.limit(limit);
+  console.info('[MJT Inventory] Supabase published trucks query result', {
+    rowCount: data?.length ?? 0,
+    trucks: data ?? [],
+  });
 
-  const { data, error } = await query;
-  if (error) throw error;
-  return data ?? [];
+  if (error) {
+    console.error('[MJT Inventory] Supabase published trucks query error', error);
+    throwInventoryError('load published vehicles', error);
+  }
+
+  const trucks = [...(data ?? [])].sort((first, second) => {
+    if (!first.created_at || !second.created_at) return 0;
+    return new Date(second.created_at) - new Date(first.created_at);
+  });
+
+  return limit ? trucks.slice(0, limit) : trucks;
 }
 
 export async function getTruckBySlug(slug) {
-  if (!isSupabaseConfigured) return null;
+  requireSupabase();
 
-  const { data, error } = await supabase
-    .from('trucks')
-    .select(truckFields)
+  const { data, error } = await trucksTable()
+    .select('*')
     .eq('slug', slug)
     .eq('is_published', true)
     .maybeSingle();
 
-  if (error) throw error;
+  if (error) throwInventoryError('load vehicle details', error);
   return data;
 }
 
 export async function getAdminTrucks() {
-  requireSupabase();
-  const { data, error } = await supabase
-    .from('trucks')
-    .select(truckFields)
+  const { data, error } = await trucksTable()
+    .select('*')
     .order('updated_at', { ascending: false });
 
-  if (error) throw error;
+  if (error) throwInventoryError('load admin inventory', error);
   return data ?? [];
 }
 
@@ -106,17 +119,17 @@ export async function saveTruck(values) {
   }
 
   const operation = values.id
-    ? supabase.from('trucks').update(payload).eq('id', values.id)
-    : supabase.from('trucks').insert(payload);
+    ? trucksTable().update(payload).eq('id', values.id)
+    : trucksTable().insert(payload);
 
-  const { data, error } = await operation.select(truckFields).single();
+  const { data, error } = await operation.select('*').single();
   if (error) throw error;
   return data;
 }
 
 export async function deleteTruck(truck) {
   requireSupabase();
-  const { error } = await supabase.from('trucks').delete().eq('id', truck.id);
+  const { error } = await trucksTable().delete().eq('id', truck.id);
   if (error) throw error;
   try {
     await removeTruckImages(truck.image_urls ?? []);

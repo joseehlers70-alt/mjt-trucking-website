@@ -14,8 +14,8 @@ export default function InventoryState({ loading, error }) {
   return (
     <div className="inventory-state">
       <Truck size={38} />
-      <strong>No vehicles are currently listed.</strong>
-      <p>Please contact MJT directly for current availability.{error ? ' The inventory connection is being checked.' : ''}</p>
+      <strong>No vehicles are currently listed. Please contact MJT directly for current availability.</strong>
+      {error && <p className="form-error" role="alert">Inventory connection error: {error}</p>}
       <a
         className="button button-primary"
         href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hi MJT, please let me know which trucks or trailers are currently available.')}`}
